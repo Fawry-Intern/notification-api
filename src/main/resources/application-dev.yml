@@ -1,0 +1,21 @@
+server:
+  port: 2222
+custom:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: muhammadhussein2312@gmail.com
+    password: zxsm iyuy jtze pnkq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+source:
+ sender:
+   email: muhammadhussein2312@gmail.com
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8765/eureka
