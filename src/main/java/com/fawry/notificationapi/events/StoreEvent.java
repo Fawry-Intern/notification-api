@@ -1,9 +1,9 @@
 package com.fawry.notificationapi.events;
 
-public record CouponEvent(
+public record StoreEvent(
         Long storeId,
         Long userId,
-        String couponCode,
-        double discount
+        String storeName
 ) {
+
 }
