@@ -1,8 +1,11 @@
 package com.fawry.notificationapi.model;
 
+
+import com.fawry.notificationapi.dto.enums.EventType;
+
 public record NotificationRequest(
         NotificationType type,
-        String email,
-        String message
+        EventType eventType,
+        Object event
 ) {
 }

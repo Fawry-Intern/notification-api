@@ -13,7 +13,18 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
+  # Kafka Config
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:29092
+      group-id: notification_id
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent
 # Mail Configuration
 server:
   port: 2222
