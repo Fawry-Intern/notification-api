@@ -1,15 +1,15 @@
-package com.fawry.notificationapi.consumers;
+package com.fawry.kafka.consumers;
 
-import com.fawry.notificationapi.events.OrderEvent;
+import com.fawry.kafka.events.OrderEvent;
 import com.fawry.notificationapi.service.NotificationService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductEventConsumer {
+public class StoreEventConsumer {
 
     private final NotificationService notificationService;
 
-    public ProductEventConsumer(NotificationService notificationService) {
+    public StoreEventConsumer(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 

@@ -1,7 +1,7 @@
-package com.fawry.notificationapi.handler;
+package com.fawry.notificationapi.strategy;
 
 import com.fawry.notificationapi.model.NotificationRequest;
 
-public interface NotificationHandler {
+public interface NotificationStrategy {
     void sendNotification(NotificationRequest request);
 }

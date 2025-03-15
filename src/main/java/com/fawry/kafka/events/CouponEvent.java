@@ -1,4 +1,4 @@
-package com.fawry.notificationapi.events;
+package com.fawry.kafka.events;
 
 public record CouponEvent(
         Long storeId,
