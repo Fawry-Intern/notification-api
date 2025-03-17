@@ -23,9 +23,8 @@ public class FailedRegisterEventsServiceImpl implements FailedRegisterEventServi
     private final NotificationService notificationService;
 
     @Override
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(cron = "0 0 3 * * *")
     public void retryFailedRegisterEvents() {
-//        System.out.println("Hello");
 
         List<FailedRegisterEvent> failedRegisterEvents = repository.findFailedRegisterEventByEventStatusIn(
                 List.of(EventStatus.FAILED, EventStatus.RETRYING)

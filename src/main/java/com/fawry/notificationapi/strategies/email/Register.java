@@ -23,22 +23,16 @@ public class Register {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            // Set email details
             helper.setTo(event.getEmail());
             helper.setSubject("Welcome to Our Platform - Verify Your Email");
             helper.setFrom("noreply@company.com", "Fawry");
 
-            // Add inline logo (make sure path is correct)
             helper.addInline("logo",
                     new ClassPathResource("static/images/logo.png"));
 
-            // Create Thymeleaf context
             Context context = new Context();
             context.setVariable("username", event.getUsername());
-            context.setVariable("verificationLink",
-                    "https://yourdomain.com/verify-email?token=" + "sdfsd323");
 
-            // Process template
             String htmlContent = templateEngine.process("email-register", context);
             helper.setText(htmlContent, true);
 
