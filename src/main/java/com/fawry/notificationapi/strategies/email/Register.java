@@ -1,20 +1,11 @@
-package com.fawry.notificationapi.strategies;
+package com.fawry.notificationapi.strategies.email;
 
 import com.fawry.kafka.events.RegisterEvent;
-import com.fawry.notificationapi.dto.enums.EventType;
-import com.fawry.notificationapi.model.NotificationRequest;
-
-import com.fawry.notificationapi.strategy.NotificationStrategy;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
@@ -22,36 +13,12 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.UnsupportedEncodingException;
 
-
 @Service
-public class EmailNotification implements NotificationStrategy {
+@Slf4j
+public class Register {
 
-    private final Logger log = LoggerFactory.getLogger(EmailNotification.class);
-    private final JavaMailSender mailSender;
-    private final SpringTemplateEngine templateEngine;
 
-    @Value("${source.sender.email}")
-    private String SOURCE_SENDER_MAIL;
-
-    public EmailNotification(JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
-        this.mailSender = mailSender;
-        this.templateEngine = templateEngine;
-    }
-
-    @Override
-    public void sendNotification(NotificationRequest request) {
-        switch (request.eventType()) {
-            case REGISTER -> {
-                sendEmailForRegistration((RegisterEvent) request.event());
-            }
-            default -> {
-                throw new IllegalArgumentException("EventType not supported");
-            }
-        }
-
-    }
-
-    private void sendEmailForRegistration(RegisterEvent event) {
+    public void sendEmailForRegistration(RegisterEvent event, JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");

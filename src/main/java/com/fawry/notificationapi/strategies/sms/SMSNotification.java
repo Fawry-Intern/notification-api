@@ -1,4 +1,4 @@
-package com.fawry.notificationapi.strategies;
+package com.fawry.notificationapi.strategies.sms;
 
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.strategy.NotificationStrategy;

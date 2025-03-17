@@ -1,15 +1,13 @@
 package com.fawry.kafka.events;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class RegisterEvent extends BaseEvent implements Serializable {
+public class RegisterEvent extends BaseEvent{
 
     private final String username;
 
-    @JsonCreator
     public RegisterEvent(@JsonProperty("email") String email,
                          @JsonProperty("username") String username) {
         super(email);
