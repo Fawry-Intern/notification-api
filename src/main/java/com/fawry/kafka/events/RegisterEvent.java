@@ -2,8 +2,6 @@ package com.fawry.kafka.events;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
-
 public class RegisterEvent extends BaseEvent{
 
     private final String username;
