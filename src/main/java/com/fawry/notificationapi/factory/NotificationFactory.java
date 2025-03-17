@@ -1,9 +1,9 @@
 package com.fawry.notificationapi.factory;
 
 import com.fawry.notificationapi.exceptions.UnsupportedNotificationTypeException;
-import com.fawry.notificationapi.strategies.EmailNotification;
-import com.fawry.notificationapi.strategies.PushNotification;
-import com.fawry.notificationapi.strategies.SMSNotification;
+import com.fawry.notificationapi.strategies.email.EmailNotification;
+import com.fawry.notificationapi.strategies.push.PushNotification;
+import com.fawry.notificationapi.strategies.sms.SMSNotification;
 import com.fawry.notificationapi.strategy.NotificationStrategy;
 import com.fawry.notificationapi.model.NotificationType;
 

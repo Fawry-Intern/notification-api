@@ -4,4 +4,5 @@ import com.fawry.notificationapi.model.NotificationRequest;
 
 public interface NotificationService {
     void sendNotification(NotificationRequest request);
+    void resendNotification(NotificationRequest request);
 }

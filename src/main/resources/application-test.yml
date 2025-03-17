@@ -15,16 +15,28 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   # Kafka Config
   kafka:
+    listener:
+      missing-topics-fatal: false
+      ack-mode: RECORD
     consumer:
-      bootstrap-servers: localhost:29092
+      enable-auto-commit: true
+      bootstrap-servers: localhost:9092
       group-id: notification_id
       auto-offset-reset: earliest
-      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
-        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        allow.auto.create.topics: true
+        spring.json.trusted.packages: "com.fawry.kafka.events"
         spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent
+
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: true
+        spring.json.type.mapping: registerEvent:com.fawry.kafka.events.RegisterEvent
 # Mail Configuration
 server:
   port: 2222
@@ -49,3 +61,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8765/eureka
+
+
+notification:
+         user:
+           topic:
+             name: user-event
