@@ -1,5 +1,6 @@
 package com.fawry.notificationapi.dto.enums;
 
 public enum EventType {
-    REGISTER
+    REGISTER,
+    RESET_PASSWORD
 }

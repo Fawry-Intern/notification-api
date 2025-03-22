@@ -1,26 +1,19 @@
 package com.fawry.notificationapi.strategies.email;
 
 import com.fawry.kafka.events.RegisterEvent;
-import com.fawry.notificationapi.dto.enums.EventType;
+import com.fawry.kafka.events.ResetPasswordEvent;
+import com.fawry.notificationapi.exceptions.UnsupportedNotificationTypeException;
 import com.fawry.notificationapi.model.NotificationRequest;
 
 import com.fawry.notificationapi.strategy.NotificationStrategy;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Objects;
 
 
 @Service
@@ -31,7 +24,8 @@ public class EmailNotification implements NotificationStrategy {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
-    private final Register register;
+    private final RegisterService registerService;
+    private final ResetPasswordService resetPasswordService;
 
     @Value("${source.sender.email}")
     private String SOURCE_SENDER_MAIL;
@@ -40,15 +34,30 @@ public class EmailNotification implements NotificationStrategy {
     @Override
     public void sendNotification(NotificationRequest request) {
 
-        if (Objects.requireNonNull(request.eventType()) == EventType.REGISTER) {
-
-            sendEmailForRegistration((RegisterEvent) request.event());
-        } else {
-            throw new IllegalArgumentException("EventType not supported");
+        switch (request.eventType()) {
+            case REGISTER -> {
+                sendEmailForRegistration((RegisterEvent) request.event());
+            }
+            case RESET_PASSWORD -> {
+                sendEmailForResetPassword((ResetPasswordEvent) request.event());
+            }
+            default -> {
+                throw new UnsupportedNotificationTypeException("event type not supported");
+            }
         }
+
     }
 
     private void sendEmailForRegistration(RegisterEvent event) {
-        register.sendEmailForRegistration(event, mailSender, templateEngine);
+        registerService.sendEmailForRegistration(
+                event,
+                mailSender,
+                templateEngine,
+                SOURCE_SENDER_MAIL
+        );
+    }
+
+    private void sendEmailForResetPassword(ResetPasswordEvent event) {
+        resetPasswordService.sendEmailForResetPassword(event, mailSender, templateEngine, SOURCE_SENDER_MAIL);
     }
 }

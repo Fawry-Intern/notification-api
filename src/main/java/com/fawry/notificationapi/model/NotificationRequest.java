@@ -1,6 +1,7 @@
 package com.fawry.notificationapi.model;
 
 
+import com.fawry.notificationapi.dto.enums.NotificationType;
 import com.fawry.notificationapi.dto.enums.EventType;
 import lombok.Builder;
 

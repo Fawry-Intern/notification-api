@@ -3,12 +3,14 @@ package com.fawry.kafka.consumers;
 import com.fawry.kafka.events.RegisterEvent;
 import com.fawry.kafka.events.enums.EventStatus;
 import com.fawry.notificationapi.mapper.NotificationMapper;
-import com.fawry.notificationapi.model.FailedRegisterEvent;
+import com.fawry.notificationapi.entities.FailedRegisterEvent;
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.repository.FailedRegisterEventRepository;
 import com.fawry.notificationapi.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -21,17 +23,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UserEventConsumer {
 
     private final NotificationService notificationService;
     private final FailedRegisterEventRepository repository;
     private final NotificationMapper mapper;
+    private final Logger log = LoggerFactory.getLogger(UserEventConsumer.class);
 
     @RetryableTopic(
             attempts = "4",
             backoff = @Backoff(delay = 3000, multiplier = 1.5, maxDelay = 15000),
-            dltStrategy = DltStrategy.FAIL_ON_ERROR // Required for DLT handling
+            dltStrategy = DltStrategy.FAIL_ON_ERROR
     )
     @KafkaListener(topics = "user-event", groupId = "notification_id")
     public void handleUserRegister(RegisterEvent event) {

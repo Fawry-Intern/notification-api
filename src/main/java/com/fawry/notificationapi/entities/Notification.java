@@ -1,7 +1,7 @@
 package com.fawry.notificationapi.entities;
 
 
-import com.fawry.notificationapi.model.NotificationType;
+import com.fawry.notificationapi.dto.enums.NotificationType;
 import jakarta.persistence.*;
 import lombok.*;
 

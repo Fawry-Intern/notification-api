@@ -15,17 +15,17 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 @Slf4j
-public class Register {
+public class RegisterService {
 
 
-    public void sendEmailForRegistration(RegisterEvent event, JavaMailSender mailSender, SpringTemplateEngine templateEngine) {
+    public void sendEmailForRegistration(RegisterEvent event, JavaMailSender mailSender, SpringTemplateEngine templateEngine, String sourceEmailSender) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
             helper.setTo(event.getEmail());
             helper.setSubject("Welcome to Our Platform - Verify Your Email");
-            helper.setFrom("noreply@company.com", "Fawry");
+            helper.setFrom(sourceEmailSender, "Fawry");
 
             helper.addInline("logo",
                     new ClassPathResource("static/images/logo.png"));

@@ -1,4 +1,4 @@
-package com.fawry.notificationapi.model;
+package com.fawry.notificationapi.entities;
 
 import com.fawry.kafka.events.enums.EventStatus;
 import jakarta.persistence.*;
