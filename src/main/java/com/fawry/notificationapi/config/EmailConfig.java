@@ -10,6 +10,7 @@ import java.util.Properties;
 
 @Configuration
 public class EmailConfig {
+
     private final EmailProperties emailProperties;
 
     public EmailConfig(EmailProperties emailProperties) {

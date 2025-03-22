@@ -1,4 +1,4 @@
-package com.fawry.notificationapi.model;
+package com.fawry.notificationapi.dto.enums;
 
 public enum NotificationType {
     EMAIL,
