@@ -1,10 +1,10 @@
 package com.fawry.notificationapi.strategies.email;
 
+import com.fawry.kafka.events.OrderCancelNotificationEvent;
 import com.fawry.kafka.events.RegisterEvent;
 import com.fawry.kafka.events.ResetPasswordEvent;
 import com.fawry.notificationapi.exceptions.UnsupportedNotificationTypeException;
 import com.fawry.notificationapi.model.NotificationRequest;
-
 import com.fawry.notificationapi.strategy.NotificationStrategy;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -26,6 +26,7 @@ public class EmailNotification implements NotificationStrategy {
 
     private final RegisterService registerService;
     private final ResetPasswordService resetPasswordService;
+    private final OrderCancellationService cancellationService;;
 
     @Value("${source.sender.email}")
     private String SOURCE_SENDER_MAIL;
@@ -40,6 +41,9 @@ public class EmailNotification implements NotificationStrategy {
             }
             case RESET_PASSWORD -> {
                 sendEmailForResetPassword((ResetPasswordEvent) request.event());
+            }
+            case ORDER_CANCELLATION -> {
+                sendEmailForOrderCancellation((OrderCancelNotificationEvent) request.event());
             }
             default -> {
                 throw new UnsupportedNotificationTypeException("event type not supported");
@@ -60,4 +64,11 @@ public class EmailNotification implements NotificationStrategy {
     private void sendEmailForResetPassword(ResetPasswordEvent event) {
         resetPasswordService.sendEmailForResetPassword(event, mailSender, templateEngine, SOURCE_SENDER_MAIL);
     }
+
+    private void sendEmailForOrderCancellation(OrderCancelNotificationEvent event) {
+        cancellationService.sendEmailForOrderCancellation(event, mailSender, templateEngine, SOURCE_SENDER_MAIL);
+    }
+
+
+
 }
