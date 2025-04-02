@@ -22,14 +22,14 @@ spring:
     consumer:
       enable-auto-commit: true
       bootstrap-servers: localhost:9092
-      group-id: notification_id
+      group-id: notification_id, order_id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         allow.auto.create.topics: true
         spring.json.trusted.packages: "com.fawry.kafka.events"
-        spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent, resetPasswordEvent:com.fawry.kafka.events.ResetPasswordEvent
+        spring.json.type.mapping: registerEvent:com.fawry.kafka.events.RegisterEvent, resetPasswordEvent:com.fawry.kafka.events.ResetPasswordEvent, orderCancelNotificationEvent:com.fawry.kafka.events.OrderCancelNotificationEvent
 
     producer:
       bootstrap-servers: localhost:9092

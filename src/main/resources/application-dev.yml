@@ -4,7 +4,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/notification_db
     username: postgres
-    password: postgres
+    password: 12345
 
   # Jpa/hibernate Configuration
   jpa:
@@ -29,7 +29,7 @@ spring:
       properties:
         allow.auto.create.topics: true
         spring.json.trusted.packages: "com.fawry.kafka.events"
-        spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent
+        spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent, resetPasswordEvent:com.fawry.kafka.events.ResetPasswordEvent, orderCanceledEventDTO:com.fawry.kafka.events.OrderCanceledEventDTO
 
     producer:
       bootstrap-servers: localhost:9092
