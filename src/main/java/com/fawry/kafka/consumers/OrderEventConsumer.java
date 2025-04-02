@@ -1,23 +1,51 @@
 package com.fawry.kafka.consumers;
-
-import com.fawry.kafka.events.OrderEvent;
+import com.fawry.kafka.events.OrderCancelNotificationEvent;
+import com.fawry.kafka.events.RegisterEvent;
+import com.fawry.notificationapi.mapper.NotificationMapper;
 import com.fawry.notificationapi.service.NotificationService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.annotation.DltHandler;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.TopicPartition;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class OrderEventConsumer {
 
     private final NotificationService notificationService;
+    private final NotificationMapper mapper;
 
+    @KafkaListener(
+            topics = "order-events",
+            groupId = "order_id",
+            topicPartitions = {
+                    @TopicPartition(topic = "order-events", partitions = {"3"})
+            }
+    )    public void handleOrderCancellation(OrderCancelNotificationEvent event) {
+        log.info("Processing Order cancellation event: {}", event);
 
-    public OrderEventConsumer(NotificationService notificationService) {
-        this.notificationService = notificationService;
+        try {
+            var notificationData = mapper.mapFromOrderCanceledEventToNotificationRequest(event);
+            notificationService.sendNotification(notificationData);
+        } catch (Exception ex) {
+            log.error("Failed to process order cancellation: {}", event, ex);
+            throw new RuntimeException("Error processing user registration event", ex);
+        }
     }
 
-    public void consumeOrderEvent(OrderEvent event) {
+    @DltHandler
+    public void handleDltOrderCancellation(
+            @Payload RegisterEvent event,
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
+            @Header(KafkaHeaders.OFFSET) long offset
+    ) {
+        log.error("DLT processing for event: {}", event);
 
-        /*
-        // create notification request and send to notification service to handl it
-         */
     }
 }
