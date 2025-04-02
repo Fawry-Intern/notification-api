@@ -33,7 +33,7 @@ public class FailedRegisterEventsServiceImpl implements FailedRegisterEventServi
         for (var fre : failedRegisterEvents) {
 
             try {
-                RegisterEvent registerEvent = new RegisterEvent(fre.getEmail(), fre.getUsername());
+                RegisterEvent registerEvent = new RegisterEvent(fre.getEmail());
 
                 var notificationRequest = NotificationRequest.builder()
                         .notificationType(NotificationType.EMAIL)

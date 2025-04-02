@@ -58,7 +58,6 @@ public class UserEventConsumer {
 
         FailedRegisterEvent failedEvent = FailedRegisterEvent.builder()
                 .email(event.getEmail())
-                .username(event.getUsername())
                 .eventStatus(EventStatus.FAILED)
                 .topic(topic)
                 .offset(offset)

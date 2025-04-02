@@ -2,7 +2,7 @@ spring:
   # Jdbc Configuration
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/notification_db
+    url: jdbc:postgresql://192.168.99.101:5432/notification_db
     username: postgres
     password: postgres
 
@@ -21,7 +21,7 @@ spring:
       ack-mode: RECORD
     consumer:
       enable-auto-commit: true
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: 192.168.99.101:9092
       group-id: notification_id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -29,10 +29,10 @@ spring:
       properties:
         allow.auto.create.topics: true
         spring.json.trusted.packages: "com.fawry.kafka.events"
-        spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent
+        spring.json.type.mapping: productEvent:com.fawry.kafka.events.ProductEvent, registerEvent:com.fawry.kafka.events.RegisterEvent, resetPasswordEvent:com.fawry.kafka.events.ResetPasswordEvent
 
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: 192.168.99.101:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:

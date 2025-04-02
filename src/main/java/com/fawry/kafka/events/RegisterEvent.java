@@ -4,23 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RegisterEvent extends BaseEvent{
 
-    private final String username;
 
-    public RegisterEvent(@JsonProperty("email") String email,
-                         @JsonProperty("username") String username) {
+    public RegisterEvent(@JsonProperty("email") String email) {
         super(email);
-        this.username = username;
-    }
 
-    public String getUsername() {
-        return username;
     }
 
     @Override
     public String toString() {
         return "RegisterEvent{" +
                 "email='" + super.getEmail() +
-                "username='" + username + '\'' +
+                "username='"  + '\'' +
                 '}';
     }
 }

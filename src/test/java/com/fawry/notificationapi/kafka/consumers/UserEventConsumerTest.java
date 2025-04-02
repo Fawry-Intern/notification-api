@@ -43,7 +43,7 @@ public class UserEventConsumerTest {
     public void givenValidRegisterEvent_whenHandleRegisterEvent_thenSendNotificationSuccessfully() {
 
         // Given
-        var event = new RegisterEvent("muhammadhussein2312@gmail.com", "muhammad hussein");
+        var event = new RegisterEvent("muhammadhussein2312@gmail.com");
         var notificationRequest = NotificationRequest.builder()
                 .notificationType(NotificationType.EMAIL)
                 .eventType(EventType.REGISTER)
@@ -65,7 +65,7 @@ public class UserEventConsumerTest {
     @Test
     public void givenRegisterEventWithMapperFailure_whenHandleUserRegister_thenThrowException() {
         // Given
-        var event = new RegisterEvent("muhammadhussein2312@gmail.com", "muhammad hussein");
+        var event = new RegisterEvent("muhammadhussein2312@gmail.com");
         Mockito.when(mapper.mapFromRegisterEventToNotificationRequest(event)).thenThrow(new RuntimeException("Mapping failed"));
 
         // When

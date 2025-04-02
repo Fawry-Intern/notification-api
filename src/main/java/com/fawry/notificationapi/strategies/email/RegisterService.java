@@ -31,7 +31,7 @@ public class RegisterService {
                     new ClassPathResource("static/images/logo.png"));
 
             Context context = new Context();
-            context.setVariable("username", event.getUsername());
+
 
             String htmlContent = templateEngine.process("email-register", context);
             helper.setText(htmlContent, true);
