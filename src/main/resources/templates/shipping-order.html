@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status Update</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+    <h2 style="color: #007bff;">Order Status Update</h2>
+
+    <p>Dear <strong th:text="${email}"></strong>,</p>
+
+
+
+    <div th:switch="${shippingStatus}">
+
+        <div th:case="${T(com.fawry.notificationapi.dto.enums.ShippingStatus).RECEIVED}">
+            <p>We received your order request with ID: <strong th:text="${orderId}"></strong>.</p>
+            <p>Your order is being processed and is in the "Received" status. We are preparing your shipment for delivery.</p>
+            <p>Click the link below to track the status of your order:</p>
+            <p>
+                <a th:href="${trackingLink}"
+                   style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">
+                    Track Your Order
+                </a>
+            </p>
+            <p>This is your order confirmation code: <strong th:text="${confirmationCode}"></strong>.</p>
+            <p>Please share it with the delivery person **only after receiving your order**.</p>
+        </div>
+
+        <div th:case="${T(com.fawry.notificationapi.dto.enums.ShippingStatus).DELIVERED}">
+            <p>Congratulations! Your order with ID <strong th:text="${orderId}"></strong> has been successfully delivered to you.</p>
+            <p>We hope you enjoy your purchase. If you have any questions or concerns, feel free to contact us.</p>
+        </div>
+
+
+        <div th:case="*">
+            <p>Your order is currently in the <strong th:text="${shippingStatus}"></strong> status.</p>
+            <p>We are working hard to process and ship your order as soon as possible. Please check back later for updates.</p>
+            <p>Click the link below to track the status of your order:</p>
+            <p>
+                <a th:href="${trackingLink}"
+                   style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">
+                    Track Your Order
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+    <p>Best regards,<br>The Fawry Team</p>
+
+    <hr style="border: none; border-top: 1px solid #eee;">
+    <p style="font-size: 12px; color: #777;">
+        This is an automated message. Please do not reply directly to this email.
+    </p>
+</div>
+</body>
+</html>

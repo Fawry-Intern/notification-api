@@ -1,7 +1,7 @@
 package com.fawry.notificationapi.service.impl;
 
-import com.fawry.kafka.events.RegisterEvent;
 import com.fawry.kafka.events.enums.EventStatus;
+import com.fawry.kafka.events.user_events.RegisterEvent;
 import com.fawry.notificationapi.dto.enums.EventType;
 import com.fawry.notificationapi.entities.FailedRegisterEvent;
 import com.fawry.notificationapi.model.NotificationRequest;
@@ -33,7 +33,7 @@ public class FailedRegisterEventsServiceImpl implements FailedRegisterEventServi
         for (var fre : failedRegisterEvents) {
 
             try {
-                RegisterEvent registerEvent = new RegisterEvent(fre.getEmail(), fre.getUsername());
+                RegisterEvent registerEvent = new RegisterEvent(fre.getEmail());
 
                 var notificationRequest = NotificationRequest.builder()
                         .notificationType(NotificationType.EMAIL)

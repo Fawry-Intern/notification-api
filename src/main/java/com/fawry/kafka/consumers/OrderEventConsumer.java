@@ -1,6 +1,6 @@
 package com.fawry.kafka.consumers;
-import com.fawry.kafka.events.OrderCancelNotificationEvent;
-import com.fawry.kafka.events.RegisterEvent;
+import com.fawry.kafka.events.order_events.OrderCancelNotificationEvent;
+import com.fawry.kafka.events.user_events.RegisterEvent;
 import com.fawry.notificationapi.mapper.NotificationMapper;
 import com.fawry.notificationapi.service.NotificationService;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,13 @@
 package com.fawry.kafka.consumers;
 
-import com.fawry.kafka.events.RegisterEvent;
 import com.fawry.kafka.events.enums.EventStatus;
+import com.fawry.kafka.events.user_events.RegisterEvent;
 import com.fawry.notificationapi.mapper.NotificationMapper;
 import com.fawry.notificationapi.entities.FailedRegisterEvent;
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.repository.FailedRegisterEventRepository;
 import com.fawry.notificationapi.service.NotificationService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.DltHandler;
@@ -58,7 +57,6 @@ public class UserEventConsumer {
 
         FailedRegisterEvent failedEvent = FailedRegisterEvent.builder()
                 .email(event.getEmail())
-                .username(event.getUsername())
                 .eventStatus(EventStatus.FAILED)
                 .topic(topic)
                 .offset(offset)

@@ -1,8 +1,9 @@
 package com.fawry.notificationapi.strategies.email;
 
-import com.fawry.kafka.events.OrderCancelNotificationEvent;
-import com.fawry.kafka.events.RegisterEvent;
-import com.fawry.kafka.events.ResetPasswordEvent;
+import com.fawry.kafka.events.order_events.OrderCancelNotificationEvent;
+import com.fawry.kafka.events.order_events.ShippingStatusEvent;
+import com.fawry.kafka.events.user_events.RegisterEvent;
+import com.fawry.kafka.events.user_events.ResetPasswordEvent;
 import com.fawry.notificationapi.exceptions.UnsupportedNotificationTypeException;
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.strategy.NotificationStrategy;
@@ -27,6 +28,7 @@ public class EmailNotification implements NotificationStrategy {
     private final RegisterService registerService;
     private final ResetPasswordService resetPasswordService;
     private final OrderCancellationService cancellationService;;
+    private final ShippingEmailService shippingEmailService;
 
     @Value("${source.sender.email}")
     private String SOURCE_SENDER_MAIL;
@@ -45,6 +47,10 @@ public class EmailNotification implements NotificationStrategy {
             case ORDER_CANCELLATION -> {
                 sendEmailForOrderCancellation((OrderCancelNotificationEvent) request.event());
             }
+            case Receiving_Order -> {
+                sendEmailForOrderReceiving((ShippingStatusEvent) request.event());
+            }
+
             default -> {
                 throw new UnsupportedNotificationTypeException("event type not supported");
             }
@@ -69,6 +75,8 @@ public class EmailNotification implements NotificationStrategy {
         cancellationService.sendEmailForOrderCancellation(event, mailSender, templateEngine, SOURCE_SENDER_MAIL);
     }
 
-
+    private void sendEmailForOrderReceiving(ShippingStatusEvent event) {
+        shippingEmailService.sendEmailForOrderReceiving(event, mailSender, templateEngine, SOURCE_SENDER_MAIL);
+    }
 
 }

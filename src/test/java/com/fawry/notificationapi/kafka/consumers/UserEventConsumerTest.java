@@ -1,14 +1,13 @@
 package com.fawry.notificationapi.kafka.consumers;
 
 import com.fawry.kafka.consumers.UserEventConsumer;
-import com.fawry.kafka.events.RegisterEvent;
+import com.fawry.kafka.events.user_events.RegisterEvent;
 import com.fawry.notificationapi.dto.enums.EventType;
 import com.fawry.notificationapi.dto.enums.NotificationType;
 import com.fawry.notificationapi.mapper.NotificationMapper;
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.repository.FailedRegisterEventRepository;
 import com.fawry.notificationapi.service.impl.NotificationServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,7 +42,7 @@ public class UserEventConsumerTest {
     public void givenValidRegisterEvent_whenHandleRegisterEvent_thenSendNotificationSuccessfully() {
 
         // Given
-        var event = new RegisterEvent("muhammadhussein2312@gmail.com", "muhammad hussein");
+        var event = new RegisterEvent("muhammadhussein2312@gmail.com");
         var notificationRequest = NotificationRequest.builder()
                 .notificationType(NotificationType.EMAIL)
                 .eventType(EventType.REGISTER)
@@ -65,7 +64,7 @@ public class UserEventConsumerTest {
     @Test
     public void givenRegisterEventWithMapperFailure_whenHandleUserRegister_thenThrowException() {
         // Given
-        var event = new RegisterEvent("muhammadhussein2312@gmail.com", "muhammad hussein");
+        var event = new RegisterEvent("muhammadhussein2312@gmail.com");
         Mockito.when(mapper.mapFromRegisterEventToNotificationRequest(event)).thenThrow(new RuntimeException("Mapping failed"));
 
         // When
