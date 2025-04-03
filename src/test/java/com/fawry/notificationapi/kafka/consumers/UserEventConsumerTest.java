@@ -1,14 +1,13 @@
 package com.fawry.notificationapi.kafka.consumers;
 
 import com.fawry.kafka.consumers.UserEventConsumer;
-import com.fawry.kafka.events.RegisterEvent;
+import com.fawry.kafka.events.user_events.RegisterEvent;
 import com.fawry.notificationapi.dto.enums.EventType;
 import com.fawry.notificationapi.dto.enums.NotificationType;
 import com.fawry.notificationapi.mapper.NotificationMapper;
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.repository.FailedRegisterEventRepository;
 import com.fawry.notificationapi.service.impl.NotificationServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

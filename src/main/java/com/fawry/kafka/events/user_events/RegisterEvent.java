@@ -1,8 +1,9 @@
-package com.fawry.kafka.events;
+package com.fawry.kafka.events.user_events;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fawry.kafka.events.BaseEvent;
 
-public class RegisterEvent extends BaseEvent{
+public class RegisterEvent extends BaseEvent {
 
 
     public RegisterEvent(@JsonProperty("email") String email) {
@@ -14,7 +15,6 @@ public class RegisterEvent extends BaseEvent{
     public String toString() {
         return "RegisterEvent{" +
                 "email='" + super.getEmail() +
-                "username='"  + '\'' +
                 '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.fawry.notificationapi.strategies.email;
 
-import com.fawry.kafka.events.ResetPasswordEvent;
+import com.fawry.kafka.events.user_events.ResetPasswordEvent;
 import com.fawry.notificationapi.exceptions.NotificationException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
