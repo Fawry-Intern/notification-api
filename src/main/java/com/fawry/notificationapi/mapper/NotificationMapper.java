@@ -1,8 +1,9 @@
 package com.fawry.notificationapi.mapper;
 
-import com.fawry.kafka.events.OrderCancelNotificationEvent;
-import com.fawry.kafka.events.RegisterEvent;
-import com.fawry.kafka.events.ResetPasswordEvent;
+import com.fawry.kafka.events.order_events.OrderCancelNotificationEvent;
+import com.fawry.kafka.events.order_events.ShippingStatusEvent;
+import com.fawry.kafka.events.user_events.RegisterEvent;
+import com.fawry.kafka.events.user_events.ResetPasswordEvent;
 import com.fawry.notificationapi.dto.enums.EventType;
 import com.fawry.notificationapi.model.NotificationRequest;
 import com.fawry.notificationapi.dto.enums.NotificationType;
@@ -34,4 +35,13 @@ public class NotificationMapper {
                 .event(event)
                 .build();
     }
+    public NotificationRequest mapFromReceivingOrderEventToNotificationRequest(ShippingStatusEvent event) {
+        return NotificationRequest.builder()
+                .notificationType(NotificationType.EMAIL)
+                .eventType(EventType.Receiving_Order)
+                .event(event)
+                .build();
+    }
+
+
 }
