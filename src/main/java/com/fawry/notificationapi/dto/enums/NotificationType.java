@@ -3,5 +3,6 @@ package com.fawry.notificationapi.dto.enums;
 public enum NotificationType {
     EMAIL,
     SMS,
-    PUSH
+    PUSH,
+    REAL_TIME
 }

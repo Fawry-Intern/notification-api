@@ -1,5 +1,6 @@
 package com.fawry.kafka.consumers;
 
+import com.fawry.kafka.events.order_events.ShippingDetailsEvent;
 import com.fawry.kafka.events.order_events.ShippingStatusEvent;
 import com.fawry.notificationapi.mapper.NotificationMapper;
 import com.fawry.notificationapi.service.NotificationService;
@@ -22,14 +23,30 @@ public class ShippingEventConsumer {
             backoff = @Backoff(delay = 3000, multiplier = 1.5, maxDelay = 15000),
             dltStrategy = DltStrategy.FAIL_ON_ERROR
     )
-    @KafkaListener(topics = "shipping-events", groupId = "notification_id")
-    public void listenForOrderReceivingEvent(ShippingStatusEvent event){
+    @KafkaListener(topics = "shipping-status-events", groupId = "notification_id")
+    public void listenForShipmentStatusEvent(ShippingStatusEvent event){
 
         System.out.println(event);
         var notificationRequest = mapper.mapFromReceivingOrderEventToNotificationRequest(event);
 
         notificationService.sendNotification(notificationRequest);
     }
+
+
+    @RetryableTopic(
+            attempts = "4",
+            backoff = @Backoff(delay = 3000, multiplier = 1.5, maxDelay = 15000),
+            dltStrategy = DltStrategy.FAIL_ON_ERROR
+    )
+    @KafkaListener(topics = "shipping-details-events", groupId = "notification_id")
+    public void listenForShipmentDetailsEvent(ShippingDetailsEvent event){
+
+        System.out.println(event);
+        var notificationRequest = mapper.mapFromShippingDetailsEventToNotificationRequest(event);
+
+        notificationService.sendNotification(notificationRequest);
+    }
+
 
 
 }

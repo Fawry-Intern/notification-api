@@ -33,7 +33,7 @@ spring:
                  registerEvent:com.fawry.kafka.events.user_events.RegisterEvent,
                  resetPasswordEvent:com.fawry.kafka.events.user_events.ResetPasswordEvent,
                  shippingStatusEvent:com.fawry.kafka.events.order_events.ShippingStatusEvent,
-                 orderCancelNotificationEvent:com.fawry.kafka.events.OrderCancelNotificationEvent
+                 shippingDetailsEvent:com.fawry.kafka.events.order_events.ShippingDetailsEvent
 
 
     producer:

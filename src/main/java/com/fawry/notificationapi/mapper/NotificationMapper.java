@@ -1,6 +1,7 @@
 package com.fawry.notificationapi.mapper;
 
 import com.fawry.kafka.events.order_events.OrderCancelNotificationEvent;
+import com.fawry.kafka.events.order_events.ShippingDetailsEvent;
 import com.fawry.kafka.events.order_events.ShippingStatusEvent;
 import com.fawry.kafka.events.user_events.RegisterEvent;
 import com.fawry.kafka.events.user_events.ResetPasswordEvent;
@@ -39,6 +40,13 @@ public class NotificationMapper {
         return NotificationRequest.builder()
                 .notificationType(NotificationType.EMAIL)
                 .eventType(EventType.Receiving_Order)
+                .event(event)
+                .build();
+    }
+    public NotificationRequest mapFromShippingDetailsEventToNotificationRequest(ShippingDetailsEvent event) {
+        return NotificationRequest.builder()
+                .notificationType(NotificationType.REAL_TIME)
+                .eventType(EventType.Real_Time_Shipping)
                 .event(event)
                 .build();
     }
